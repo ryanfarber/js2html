@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>js2html elements.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">js2html</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://example.com/"
+                        >
+                            URL
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-elements.html">elements</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-page.html">page</a></li></ul><h3>Classes</h3><ul><li><a href="module-page-Page.html">Page</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>elements.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module elements */
+
+
+
+const {createAttr, createCss, tag, format} = require("./helpers.js")
+
+
+/** meta
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const meta = (attr) => tag("meta", null, attr)
+
+/** link
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const link = (attr = {}) => tag("link", attr)
+
+/** style
+ * @param {object} css - css object
+ * @param {object} attr - attributes
+ * @returns {string}
+ */
+const style = (css, attr) => {
+	css = createCss(css)
+	css = "\n" + css + "\n"
+	return tag("style", css, attr)
+}
+
+/** html
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const html = (content, attr) => tag("html", content, attr)
+
+/** body
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const body = (content, attr) => tag("body", content, attr)
+
+/** div
+ * @param {string|array} content - html content or array of elements
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ * @example
+ * div(p("hello world"), {id: "container", class: "container-a"})
+ * 
+/*
+&lt;div id="container" class="container-a">
+&lt;p>hello world&lt;/p>
+&lt;/div>
+\*
+ */
+const div = (content, attr) => {
+	if (Array.isArray(content)) content = content.join("")
+	return tag("div", content, attr)
+}
+
+/** p
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ * @example
+ * p("hello world")
+ * // &lt;p>hello world&lt;/p>
+ */
+const p = (content, attr) => {
+	content = format(content)
+	return tag("p", content, attr)
+}
+
+/** li
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ * @example
+ * li("list item")
+ */
+const li = (content, attr) => tag("li", content, attr)
+
+/** ul
+ * @param {array} items - an array of elements
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ * @example
+ * ul(["item 1", "item 2"])
+ */
+const ul = (items, attr) => {
+	if (!Array.isArray(items)) throw new ERROR("INVALID_UL")
+	let data = items.map(x => tag("li", x)).join("")
+	return tag("ul", data, attr)
+}
+
+/** h1
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const h1 = (content, attr) => tag("h1", content, attr)
+
+/** h2
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const h2 = (content, attr) => tag("h2", content, attr)
+
+/** h3
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const h3 = (content, attr) => tag("h3", content, attr)
+
+/** h4
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const h4 = (content, attr) => tag("h4", content, attr)
+
+/** span
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ * @example
+ * span("hello world")
+ * // &lt;span>hello world&lt;/span>
+ */
+const span = (content, attr) => tag("span", content, attr)
+
+/** a
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns &lt;a>
+ */
+const a = (content, attr) => tag("a", content, attr)
+
+/** quicker way to make a link
+ * @param {string} href - the url
+ * @param {string|object} [name|attr] - name or object of attributes
+ * @returns {string}
+ * @example
+ * href("https://google.com")
+ * // &lt;a href="https://google.com">https://google.com&lt;/a>
+ * href("https://google.com", "Visit Google")
+ * // &lt;a href="https://google.com">Visit Google&lt;/a>
+ */
+function href(href) {
+	let args = Array.from(arguments)
+	let name
+	let attr = {}
+	if (typeof args[1] === "string") name = args[1]
+	else if (typeof args[1] === "object") attr = args[1]
+	if (name &amp;&amp; args[2]) attr = args[2]
+	if (!name) name = href
+	return tag("a", name, {href, ...attr})
+}
+
+/** hr
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const hr = (attr = {}) => tag("hr", null, attr)
+
+/** br
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const br = (attr = {}) => tag("br", null, attr)
+
+
+
+module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

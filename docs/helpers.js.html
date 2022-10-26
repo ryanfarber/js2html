@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>js2html helpers.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">js2html</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://example.com/"
+                        >
+                            URL
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-elements.html">elements</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-page.html">page</a></li></ul><h3>Classes</h3><ul><li><a href="module-page-Page.html">Page</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>helpers.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module helpers */
+
+const Logger = require("@ryanforever/logger").v2
+const logger = new Logger(__filename, {debug: true})
+const ERROR = require("./errors.js")
+
+
+/** create a tag
+ * @param {string} type - tag type i.e "p"
+ * @param {string} data - data for the inner html
+ * @param {object} attr - attributes
+ * @returns {string}
+ */
+function tag(type, data, attr = {}) {
+	// let type = config.type
+	if (typeof attr !== "object") throw new ERROR("INVALID_ATTR")
+	if (!type) throw new ERROR("MISSING_TAG_TYPE")
+	data = data || ""
+
+	if (type == "hr") return "&lt;hr>"
+	else if (type == "br") return "&lt;br>"
+	else if (type == "link") {
+		attr = createAttr(data)
+		if (!attr) return ""
+		else return `&lt;link${attr}>`
+	} else if (type == "meta") {
+		attr = createAttr(data)
+		if (!attr) return ""
+		else return `&lt;meta${attr}>`
+	} else if (type == "div") {
+		attr = createAttr(attr)
+		return `&lt;div${attr}>\n${data}\n&lt;/div>`
+	} else {
+		attr = createAttr(attr)
+		return `&lt;${type}${attr}>${data}&lt;/${type}>`
+	}
+}
+
+/** converts \n to line break
+ * @param {string} string
+ * @returns {string}
+ * @example
+ * format("hello\nworld")
+ * // hello&lt;br>world
+ */
+function format(string) {
+	if (!string) return
+	return string.replace(/\n/gi, "&lt;br>") 
+}
+
+
+/** create the attributes in a ag
+ * @param {object} config - list of attribute properties
+ * @returns {string}
+ */
+function createAttr(config = {}) {
+	logger.debug("creating attributes...")
+	if (!config) return ""
+	let attr = Object.entries(config)
+	if (!attr.length) return ""
+	let output = " " + attr.filter(x => x[1]).map(x => `${x[0]}="${x[1]}"`).join(" ")
+	return output
+}
+
+/** create an html document
+ * @param {object} config
+ * @param {string} config.head
+ * @param {string} config.body
+ * @returns {string}
+ */
+function createDocument(config = {}) {
+	logger.debug("creating document...")
+	let head = config.head
+	let content = config.body || config.content
+
+	if (Array.isArray(content)) {
+		content = content.join("\n")
+	}
+	let output = "&lt;!DOCTYPE html>\n" + tag("html", head + tag("body", content))
+	return output
+}
+
+/** create the the head
+ * @param {object} config
+ * @param {string} config.title - title of webpage
+ * @param {object} config.style - css object
+ * @returns {string}
+ */
+function createHead(config = {}) {
+	logger.debug("creating head...")
+	let title = tag("title", config.title)
+	let meta = config.meta || []
+	meta = meta.map(x => tag("meta", x)).join("")
+	let style = tag("style", createCss(config.style))
+	let arr = [title, meta, style].join("")
+	return tag("head", arr)
+}
+
+/** create css from an object
+ * @param {object} config
+ * @returns {string}
+ * @example
+ * createCss({
+ * 	html: {
+ * 		"font-family": "helvetica"
+ * 	}
+ * })
+ * // html {font-family: helvetica;}
+ */
+function createCss(config = {}) {
+	logger.debug("creating css...")
+	let items = Object.entries(config)
+	let arr = []
+	items.forEach(x => {
+		let tag = x[0]
+		let props = Object.entries(x[1])
+		props = props.map(x => `${x[0]}: ${x[1]};`).join("")
+		arr.push(`${tag} {${props}}`)
+	})
+	let css = arr.join("\n")
+	return css
+}
+
+/** create a menu of links
+ * @param {object} items - menu items
+ * @returns {string}
+ * @example
+ * createMenu({
+ * 	home: "/index.html",
+ * 	about: "/about.html"
+ * })
+ */
+function createMenu(items) {
+	// if (!Array.isArray(items)) throw new ERROR("INVALID_MENU_ITEMS")
+	let array
+	if (typeof items === "object") items = Object.entries(items)
+
+	items = items.map(x => {
+		let name = x[0]
+		let href = x[1]
+		x = tag("a", name, {href})
+		return x
+	}).join(" | ")
+	return items
+}
+
+module.exports = {
+	format,
+	createAttr,
+	createDocument,
+	createHead,
+	createCss,
+	createMenu,
+	tag
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

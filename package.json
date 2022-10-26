@@ -1,0 +1,24 @@
+{
+  "name": "@ryanforever/js2html",
+  "version": "1.0.0",
+  "description": "convert javascript to HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "echo 'CREATING DOCS...' && rm -rf ./docs && jsdoc -r --configure jsdoc.json --verbose"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "html"
+  ],
+  "author": "ryan forever",
+  "license": "ISC",
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@ryanforever/logger": "^5.0.2",
+    "open": "^8.4.0"
+  }
+}

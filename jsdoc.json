@@ -1,0 +1,30 @@
+{
+    "source": {
+        "include": ["src", "README.md"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|docs)"
+    },
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": true,
+        "search": true,
+        "better-docs": {
+            "name": "js2html",
+            "title": "js2html",
+            "hideGenerator": true,
+            "navLinks": [
+                {
+                    "label": "URL",
+                    "href": "https://example.com/"
+                }
+            ]
+        }
+
+    },
+    "opts": {
+        "template": "node_modules/better-docs",
+        "readme": "./README.md",
+        "destination": "docs/",
+        "verbose": true
+    }
+}
