@@ -58,15 +58,6 @@
                     Documentation
                 </a>
                 
-                 
-                    
-                        <a
-                            class="link user-link "
-                            href="https://example.com/"
-                        >
-                            URL
-                        </a>
-                    
                 
                 
             </div>
@@ -105,7 +96,7 @@
             <pre class="prettyprint source linenums"><code>/** @module helpers */
 
 const Logger = require("@ryanforever/logger").v2
-const logger = new Logger(__filename, {debug: true})
+const logger = new Logger(__filename, {debug: false})
 const ERROR = require("./errors.js")
 
 
@@ -194,9 +185,11 @@ function createHead(config = {}) {
 	logger.debug("creating head...")
 	let title = tag("title", config.title)
 	let meta = config.meta || []
+	let link = config.link || []
 	meta = meta.map(x => tag("meta", x)).join("")
+	link = link.map(x => tag("link", x)).join("")
 	let style = tag("style", createCss(config.style))
-	let arr = [title, meta, style].join("")
+	let arr = [title, meta, link, style].join("")
 	return tag("head", arr)
 }
 
@@ -248,6 +241,21 @@ function createMenu(items) {
 	return items
 }
 
+
+/** join an array
+ * @param {array} array - array you want to join
+ * @param {string} [delimiter] - optional delimiter to join with. i.e. ", " or " | "
+ * @returns {string}
+ * @example
+ * join(["hello", "world"], " | ")
+ * // hello | world
+ */
+function join(array, delimiter) {
+	delimiter = delimiter || ""
+	if (!Array.isArray) throw new ERROR("INVALID_ARRAY")
+	return array.join(delimiter)
+}
+
 module.exports = {
 	format,
 	createAttr,
@@ -255,7 +263,8 @@ module.exports = {
 	createHead,
 	createCss,
 	createMenu,
-	tag
+	tag,
+	join
 }</code></pre>
         </article>
     </section>

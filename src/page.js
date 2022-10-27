@@ -1,7 +1,9 @@
 /** @module page */
 
+const path = require("path")
+const fs = require("fs")
 const Logger = require("@ryanforever/logger").v2
-const logger = new Logger(__filename, {debug: true})
+const logger = new Logger(__filename, {debug: false})
 const ERROR = require("./errors.js")
 const elements = require("./elements.js")
 const {tag, div, h1, h2, hr, html} = elements
@@ -25,7 +27,7 @@ const {createHead, createAttr, createDocument} = require("./helpers.js")
  * page.generate()
  */
 function Page(config = {}) {
-
+	logger._debug = config.debug || false
 	this.title = config.title
 	this.meta = config.meta || []
 	this.style = config.style
@@ -39,7 +41,7 @@ function Page(config = {}) {
 	 * @returns {html}
 	 */
 	this.generate = function() {
-
+		logger.debug("generating html...")
 		let head = createHead({
 			title: this.title,
 			style: {
@@ -60,9 +62,20 @@ function Page(config = {}) {
 			]
 		})
 
+		// create header
+		if (Array.isArray(this.header)) this.header = this.header.join("")
 		let header = div(h1(this.header), {id: "header", class: "header"})
+
+		// create section
+		if (Array.isArray(this.section)) this.section = this.section.join("")
 		let section = div(h2(this.section), {id: "section", class: "section"})
+
+		// create content
+		if (Array.isArray(this.content)) this.content = this.content.join("")
 		let content = div(this.content, {id: "content", class: "content"})
+
+		// create footer
+		if (Array.isArray(this.footer)) this.footer = this.footer.join("")
 		let footer = div(this.footer, {id: "footer", class: "footer", style: "position: fixed; bottom: 20px; text-align: center;"})
 
 		let container = div([header, hr(), section, content, footer], {class: "container"})
@@ -70,7 +83,21 @@ function Page(config = {}) {
 			head,
 			body: container
 		})
+		logger.debug("done!")
 		return doc
+	}
+
+	/** save html to a file
+	 * @param {string} filepath
+	 */
+	this.save = function(filepath) {
+		logger.debug("saving html...")
+		filepath = path.join(process.cwd(), filepath)
+		let html = this.generate()
+		let {dir, base} = path.parse(filepath)
+		if (!fs.existsSync(dir)) fs.mkdirSync(dir)
+		fs.writeFileSync(filepath, html)
+		logger.debug(`html saved to ${filepath}`)
 	}
 }
 

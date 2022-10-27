@@ -12,12 +12,7 @@
             "name": "js2html",
             "title": "js2html",
             "hideGenerator": true,
-            "navLinks": [
-                {
-                    "label": "URL",
-                    "href": "https://example.com/"
-                }
-            ]
+            "navLinks": []
         }
 
     },

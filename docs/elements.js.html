@@ -58,15 +58,6 @@
                     Documentation
                 </a>
                 
-                 
-                    
-                        <a
-                            class="link user-link "
-                            href="https://example.com/"
-                        >
-                            URL
-                        </a>
-                    
                 
                 
             </div>
@@ -277,9 +268,23 @@ const hr = (attr = {}) => tag("hr", null, attr)
  */
 const br = (attr = {}) => tag("br", null, attr)
 
+/** button
+ * @param {string} content - html content
+ * @param {object} attr - atrribute properties
+ * @returns {string}
+ */
+const button = (content, href, attr) => {
+	return tag("a", tag("button", content), {href})
+}
 
 
-module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span}</code></pre>
+
+module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button}
+
+
+
+
+</code></pre>
         </article>
     </section>
 

@@ -1,7 +1,7 @@
 /** @module helpers */
 
 const Logger = require("@ryanforever/logger").v2
-const logger = new Logger(__filename, {debug: true})
+const logger = new Logger(__filename, {debug: false})
 const ERROR = require("./errors.js")
 
 
@@ -146,6 +146,21 @@ function createMenu(items) {
 	return items
 }
 
+
+/** join an array
+ * @param {array} array - array you want to join
+ * @param {string} [delimiter] - optional delimiter to join with. i.e. ", " or " | "
+ * @returns {string}
+ * @example
+ * join(["hello", "world"], " | ")
+ * // hello | world
+ */
+function join(array, delimiter) {
+	delimiter = delimiter || ""
+	if (!Array.isArray) throw new ERROR("INVALID_ARRAY")
+	return array.join(delimiter)
+}
+
 module.exports = {
 	format,
 	createAttr,
@@ -153,5 +168,6 @@ module.exports = {
 	createHead,
 	createCss,
 	createMenu,
-	tag
+	tag,
+	join
 }

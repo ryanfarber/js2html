@@ -1,46 +1,60 @@
 
 
-
-
+const Logger = require("@ryanforever/logger").v2
+const logger = new Logger(__filename, {debug: false})
+const express = require("express")
+const app = express()
 const fs = require("fs")
 const open = require("open")
 let {a, href, p, li, ul, Page, div, span, createMenu} = require("./src")
+app.use(express.static("./tmp"))
+app.use("/docs", express.static("./docs"))
 
+let menu = createMenu({
+	home: "index.html",
+	test: "test.html",
+	docs: "docs/index.html"
+})
 
-
-console.log(span("hello world"))
 let page = new Page({
-	title: "Title",
+	debug: true,
+	title: "js2html",
 	css: {
 		html: {
 			"font-family": "helvetica",
 			// "margin": "20px"
 		}
 	},
-	header: "Title",
+	header: "js2html",
 	section: "Section Name",
-	footer: createMenu({
-		home: "index.html"
-	}),
+	footer: menu
 
 })
 
-page.content = "hey"
 
-go(page.generate())
-
-
-
-console.log(div(p("hello world"), {id: "container", class: "main"}))
+createIndexPage()
+createTestPage()
+open("./tmp/index.html")
 
 
-function go(input) {
-	console.log(input)
-	let filepath = "./tmp/index.html"
-	if (!fs.existsSync("./tmp")) fs.mkdirSync("./tmp")
-	fs.writeFileSync(filepath, input)
-	open(filepath)
+function createIndexPage() {
+	page.section = "this is a section heading"
+	page.content = "this is page content"
+	page.save("/tmp/index.html")
 }
+function createTestPage() {
+	page.section = "Hello"
+	page.content = [p("hello"), div(menu)]
+	page.save("/tmp/test.html")
+}
+
+
+const listener = app.listen(80, () => {
+	let port = listener.address().port
+	let host = `http://localhost:${port}`
+	logger.log(`js2html server listening @ ${host}`)
+	open(host)
+})
 
 
 
