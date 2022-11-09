@@ -6,7 +6,7 @@ const Logger = require("@ryanforever/logger").v2
 const logger = new Logger(__filename, {debug: false})
 const ERROR = require("./errors.js")
 const elements = require("./elements.js")
-const {tag, div, h1, h2, hr, html} = elements
+const {tag, div, h1, h2, hr, html, script} = elements
 const {createHead, createAttr, createDocument} = require("./helpers.js")
 
 /** create a simple page
@@ -36,6 +36,10 @@ function Page(config = {}) {
 	this.content = config.content
 	this.footer = config.footer
 	this.css = config.css
+	this.useJquery = config.useJquery || true
+	this.scripts = config.scripts || []
+	let headerScripts = []
+	if (this.useJquery) headerScripts.push({src: "https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"})
 
 	/** generate an HTML document
 	 * @returns {html}
@@ -59,12 +63,15 @@ function Page(config = {}) {
 			], 
 			link: [
 				{rel: "stylesheet", type: "text/css", href: this.style}
+			],
+			script: [
+				...headerScripts
 			]
 		})
 
 		// create header
 		if (Array.isArray(this.header)) this.header = this.header.join("")
-		let header = div(h1(this.header), {id: "header", class: "header"})
+		let header = div(h1(this.header) + hr(), {id: "header", class: "header"})
 
 		// create section
 		if (Array.isArray(this.section)) this.section = this.section.join("")
@@ -77,11 +84,12 @@ function Page(config = {}) {
 		// create footer
 		if (Array.isArray(this.footer)) this.footer = this.footer.join("")
 		let footer = div(this.footer, {id: "footer", class: "footer", style: "position: fixed; bottom: 20px; text-align: center;"})
-
-		let container = div([header, hr(), section, content, footer], {class: "container"})
+		// create scripts
+		let scripts = this.scripts.join("")
+		let container = div([header + section, content, footer], {class: "container"})
 		let doc = createDocument({
 			head,
-			body: container
+			body: container + scripts
 		})
 		logger.debug("done!")
 		return doc

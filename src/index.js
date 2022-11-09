@@ -5,6 +5,7 @@ let helpers = require("./helpers.js")
 
 module.exports = {
 	Page: require("./page.js"),
+	Table: require("./table.js"),
 	...elements,
 	...helpers
 }

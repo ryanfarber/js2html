@@ -6,7 +6,7 @@ const express = require("express")
 const app = express()
 const fs = require("fs")
 const open = require("open")
-let {a, href, p, li, ul, Page, div, span, createMenu} = require("./src")
+let {a, href, p, li, ul, Page, div, span, createMenu, form, input} = require("./src")
 app.use(express.static("./tmp"))
 app.use("/docs", express.static("./docs"))
 
@@ -39,7 +39,11 @@ open("./tmp/index.html")
 
 function createIndexPage() {
 	page.section = "this is a section heading"
-	page.content = "this is page content"
+	let _form = form([
+		input({type: "select", value: "booper", })
+
+	])
+	page.content = []
 	page.save("/tmp/index.html")
 }
 function createTestPage() {

@@ -30,6 +30,9 @@ function tag(type, data, attr = {}) {
 	} else if (type == "div") {
 		attr = createAttr(attr)
 		return `<div${attr}>\n${data}\n</div>`
+	} else if (type == "img") {
+		attr = createAttr(attr)
+		return `<img${attr}>`
 	} else {
 		attr = createAttr(attr)
 		return `<${type}${attr}>${data}</${type}>`
@@ -91,10 +94,12 @@ function createHead(config = {}) {
 	let title = tag("title", config.title)
 	let meta = config.meta || []
 	let link = config.link || []
+	let script = config.script || []
 	meta = meta.map(x => tag("meta", x)).join("")
 	link = link.map(x => tag("link", x)).join("")
+	script = script.map(x => tag("script", null, x)).join("")
 	let style = tag("style", createCss(config.style))
-	let arr = [title, meta, link, style].join("")
+	let arr = [title, meta, link, style, script].join("")
 	return tag("head", arr)
 }
 
@@ -160,6 +165,7 @@ function join(array, delimiter) {
 	if (!Array.isArray) throw new ERROR("INVALID_ARRAY")
 	return array.join(delimiter)
 }
+
 
 module.exports = {
 	format,

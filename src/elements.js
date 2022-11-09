@@ -56,7 +56,7 @@ const body = (content, attr) => tag("body", content, attr)
 \*
  */
 const div = (content, attr) => {
-	if (Array.isArray(content)) content = content.join("")
+	if (Array.isArray(content)) content = content.join("<br>")
 	return tag("div", content, attr)
 }
 
@@ -71,6 +71,11 @@ const div = (content, attr) => {
 const p = (content, attr) => {
 	content = format(content)
 	return tag("p", content, attr)
+}
+
+const input = (attr) => {
+    // content = format(content)
+    return tag("input", null, attr)
 }
 
 /** li
@@ -182,9 +187,20 @@ const button = (content, href, attr) => {
 	return tag("a", tag("button", content), {href})
 }
 
+const form = (elements, attr) => {
+    elements = elements.join("")
+    return tag("form", elements, attr)
+}
+
+const label = (content, attr) => tag("label", content, attr)
+const script = (content, attr) => tag("script", content, attr)
+const img = (attr) => tag("img", null, attr)
+const i = (content, attr) => tag("i", content, attr)
+const b = (content, attr) => tag("b", content, attr)
 
 
-module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button}
+
+module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button, input, form, script, img, label, i, b}
 
 
 
