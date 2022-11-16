@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>js2html Home</title>
+  <title>js2html _elements/body.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -97,78 +99,28 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>_elements/body.js</h1>
                 </header>
                 
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>js2html</h1>
-<p>convert javascript to html</p>
-<h2>usage</h2>
-<pre class="prettyprint source lang-javascript"><code>const {p, a} = require(&quot;@ryanforever/js2html&quot;)
+        <article>
+            <pre class="prettyprint source linenums"><code>/** contains all the contents of an HTML document, such as headings, paragraphs, images, hyperlinks, tables, lists, etc.
+ * @name body
+ * @function
+ * @param {string|array} content
+ * @param {object} attr - attributes
+ * @returns {string}
+ */
 
-p(&quot;hello world&quot;)
-// &lt;p>hello world&lt;/p>
-
-a(&quot;Website&quot;, {
-    href: &quot;https://example.com&quot;
-})
-// &lt;a href=&quot;https://example.com&quot;>Website&lt;a/>
-</code></pre>
-<h2>elements</h2>
-<p>most elements are created using the format <code>element(content, attributes)</code></p>
-<p>i.e. if you want to create a <code>div</code> with a <code>p</code> element with <code>id</code> and <code>class</code> attributes:</p>
-<pre class="prettyprint source lang-javascript"><code>div(p(&quot;hello world&quot;), {id: &quot;container&quot;, class: &quot;main&quot;})
-/*
-&lt;div id=&quot;container&quot; class=&quot;main&quot;>
-    &lt;p>hello world&lt;/p>
-&lt;/div>
-*/
-</code></pre>
-<h2>create page</h2>
-<pre class="prettyprint source lang-javascript"><code>const {Page, createMenu} = require(&quot;@ryanforever/js2html&quot;)
-
-let page = new Page({
-    title: &quot;My Website&quot;,
-    header: &quot;My Page&quot;,
-    section: &quot;Section Name&quot;,
-    footer: createMenu({
-        home: &quot;index.html&quot;
-    }),
-    css: {
-        html: {
-            &quot;font-family&quot;: &quot;helvetica&quot;,
-        }
-    }
-})
-
-page.generate()
-</code></pre></article>
+const {tag} = require("../helpers.js")
+module.exports = (content, attr) => tag("body", content, attr)</code></pre>
+        </article>
     </section>
-
-
 
 
 

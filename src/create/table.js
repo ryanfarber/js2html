@@ -1,9 +1,11 @@
 // table.js
 
-const {tag, createAttr} = require("./helpers.js")
+const {tag, createAttr} = require("../helpers.js")
 
 
-
+/** create a table element
+ * @constructor
+ */
 function Table(config = {}) {
 	const headers = config.headers
 	const data = config.data || []

@@ -58,6 +58,22 @@
                     Documentation
                 </a>
                 
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+                        >
+                            Mozilla HTML Docs
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://www.w3schools.com/html/default.asp"
+                        >
+                            W3 Schools HTML
+                        </a>
+                    
                 
                 
             </div>
@@ -76,7 +92,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-elements.html">elements</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-page.html">page</a></li></ul><h3>Classes</h3><ul><li><a href="module-page-Page.html">Page</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-elements.html">elements</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-page.html">page</a></li></ul><h3>Classes</h3><ul><li><a href="Doc.html">Doc</a></li><li><a href="Form.html">Form</a></li><li><a href="module-page-Page.html">Page</a></li><li><a href="Select.html">Select</a></li><li><a href="Table.html">Table</a></li><li><a href="Ul.html">Ul</a></li></ul><h3>Global</h3><ul><li><a href="global.html#a">a</a></li><li><a href="global.html#b">b</a></li><li><a href="global.html#body">body</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#code">code</a></li><li><a href="global.html#details">details</a></li><li><a href="global.html#div">div</a></li><li><a href="global.html#h1">h1</a></li><li><a href="global.html#h2">h2</a></li><li><a href="global.html#h3">h3</a></li><li><a href="global.html#h4">h4</a></li><li><a href="global.html#h5">h5</a></li><li><a href="global.html#h6">h6</a></li><li><a href="global.html#hr">hr</a></li><li><a href="global.html#i">i</a></li><li><a href="global.html#input">input</a></li><li><a href="global.html#p">p</a></li><li><a href="global.html#script">script</a></li><li><a href="global.html#select">select</a></li><li><a href="global.html#span">span</a></li><li><a href="global.html#ul">ul</a></li></ul></div>
                 
             </nav>
         </div>
@@ -101,7 +117,7 @@ const Logger = require("@ryanforever/logger").v2
 const logger = new Logger(__filename, {debug: false})
 const ERROR = require("./errors.js")
 const elements = require("./elements.js")
-const {tag, div, h1, h2, hr, html} = elements
+const {tag, div, h1, h2, hr, html, script} = elements
 const {createHead, createAttr, createDocument} = require("./helpers.js")
 
 /** create a simple page
@@ -131,6 +147,10 @@ function Page(config = {}) {
 	this.content = config.content
 	this.footer = config.footer
 	this.css = config.css
+	this.useJquery = config.useJquery || true
+	this.scripts = config.scripts || []
+	let headerScripts = []
+	if (this.useJquery) headerScripts.push({src: "https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"})
 
 	/** generate an HTML document
 	 * @returns {html}
@@ -154,12 +174,15 @@ function Page(config = {}) {
 			], 
 			link: [
 				{rel: "stylesheet", type: "text/css", href: this.style}
+			],
+			script: [
+				...headerScripts
 			]
 		})
 
 		// create header
 		if (Array.isArray(this.header)) this.header = this.header.join("")
-		let header = div(h1(this.header), {id: "header", class: "header"})
+		let header = div(h1(this.header) + hr(), {id: "header", class: "header"})
 
 		// create section
 		if (Array.isArray(this.section)) this.section = this.section.join("")
@@ -172,11 +195,12 @@ function Page(config = {}) {
 		// create footer
 		if (Array.isArray(this.footer)) this.footer = this.footer.join("")
 		let footer = div(this.footer, {id: "footer", class: "footer", style: "position: fixed; bottom: 20px; text-align: center;"})
-
-		let container = div([header, hr(), section, content, footer], {class: "container"})
+		// create scripts
+		let scripts = this.scripts.join("")
+		let container = div([header + section, content, footer], {class: "container"})
 		let doc = createDocument({
 			head,
-			body: container
+			body: container + scripts
 		})
 		logger.debug("done!")
 		return doc

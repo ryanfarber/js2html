@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>js2html Home</title>
+  <title>js2html create/table.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -97,78 +99,70 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>create/table.js</h1>
                 </header>
                 
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>js2html</h1>
-<p>convert javascript to html</p>
-<h2>usage</h2>
-<pre class="prettyprint source lang-javascript"><code>const {p, a} = require(&quot;@ryanforever/js2html&quot;)
+        <article>
+            <pre class="prettyprint source linenums"><code>// table.js
 
-p(&quot;hello world&quot;)
-// &lt;p>hello world&lt;/p>
+const {tag, createAttr} = require("../helpers.js")
 
-a(&quot;Website&quot;, {
-    href: &quot;https://example.com&quot;
-})
-// &lt;a href=&quot;https://example.com&quot;>Website&lt;a/>
-</code></pre>
-<h2>elements</h2>
-<p>most elements are created using the format <code>element(content, attributes)</code></p>
-<p>i.e. if you want to create a <code>div</code> with a <code>p</code> element with <code>id</code> and <code>class</code> attributes:</p>
-<pre class="prettyprint source lang-javascript"><code>div(p(&quot;hello world&quot;), {id: &quot;container&quot;, class: &quot;main&quot;})
-/*
-&lt;div id=&quot;container&quot; class=&quot;main&quot;>
-    &lt;p>hello world&lt;/p>
-&lt;/div>
-*/
-</code></pre>
-<h2>create page</h2>
-<pre class="prettyprint source lang-javascript"><code>const {Page, createMenu} = require(&quot;@ryanforever/js2html&quot;)
 
-let page = new Page({
-    title: &quot;My Website&quot;,
-    header: &quot;My Page&quot;,
-    section: &quot;Section Name&quot;,
-    footer: createMenu({
-        home: &quot;index.html&quot;
-    }),
-    css: {
-        html: {
-            &quot;font-family&quot;: &quot;helvetica&quot;,
-        }
-    }
-})
+/** create a table element
+ * @constructor
+ */
+function Table(config = {}) {
+	const headers = config.headers
+	const data = config.data || []
+	let attr = config.attr
 
-page.generate()
-</code></pre></article>
+	this.headers = headers
+	this.data = data
+	this.attr = attr
+
+	this.generate = function() {
+		let rowData = []
+		// attr = createAttr(attr)
+
+		this.headers = this.headers.map(x => tag("th", x, {style: "text-align: left; padding: 5px;"})).join("")
+		this.data.forEach(x => {
+			let vals = Object.values(x).map(x => tag("td", x, {style: "text-align: left; padding: 5px;"})).join("")
+			rowData.push(vals)
+		})
+
+		let rows = rowData.map(x => tag("tr", x))
+		this.headers = tag("tr", this.headers)
+		rows.unshift(this.headers)
+		rows = rows.join("")
+
+		let table = tag("table", rows, attr)
+		return table
+	}
+}
+
+
+
+// let table = new Table({
+// 	headers: ["a", "b", "c"],
+// 	data: [
+// 		{a: "heyw", b: "aboper", c: "asdf"}
+
+// 	]
+// })
+
+// console.log(table)
+// console.log(table.generate())
+
+
+module.exports = Table</code></pre>
+        </article>
     </section>
-
-
 
 
 

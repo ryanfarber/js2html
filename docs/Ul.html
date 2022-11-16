@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>js2html Home</title>
+  <title>js2html Ul</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -97,17 +97,56 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Class</p>
+                    <h1>Ul</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>Ul<span class="signature">(config)</span><span class="type-signature"> &rarr; {html}</span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="Ul">
+        <a class="href-link" href="#Ul">#</a>
+        
+        <span class="code-name">
+            
+                new Ul<span class="signature">(config)</span><span class="type-signature"> &rarr; {html}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        create a UL element.
+    </div>
     
 
 
-    <h3> </h3>
 
 
 
@@ -115,60 +154,287 @@
 
 
 
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>config</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
 
 
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>items</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">list items</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>attr</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">attributes</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>style</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">refer to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type">MDN</a> for list of styles</td>
+</tr>
+
+  
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="create_ul.js.html" class="button">View Source</a>
+            <span>
+                <a href="create_ul.js.html">create/ul.js</a>, <a href="create_ul.js.html#line12">line 12</a>
+            </span>
+        </p>
+    
+</dl>
 
 
 
-    <section>
-        <article><h1>js2html</h1>
-<p>convert javascript to html</p>
-<h2>usage</h2>
-<pre class="prettyprint source lang-javascript"><code>const {p, a} = require(&quot;@ryanforever/js2html&quot;)
-
-p(&quot;hello world&quot;)
-// &lt;p>hello world&lt;/p>
-
-a(&quot;Website&quot;, {
-    href: &quot;https://example.com&quot;
-})
-// &lt;a href=&quot;https://example.com&quot;>Website&lt;a/>
-</code></pre>
-<h2>elements</h2>
-<p>most elements are created using the format <code>element(content, attributes)</code></p>
-<p>i.e. if you want to create a <code>div</code> with a <code>p</code> element with <code>id</code> and <code>class</code> attributes:</p>
-<pre class="prettyprint source lang-javascript"><code>div(p(&quot;hello world&quot;), {id: &quot;container&quot;, class: &quot;main&quot;})
-/*
-&lt;div id=&quot;container&quot; class=&quot;main&quot;>
-    &lt;p>hello world&lt;/p>
-&lt;/div>
-*/
-</code></pre>
-<h2>create page</h2>
-<pre class="prettyprint source lang-javascript"><code>const {Page, createMenu} = require(&quot;@ryanforever/js2html&quot;)
-
-let page = new Page({
-    title: &quot;My Website&quot;,
-    header: &quot;My Page&quot;,
-    section: &quot;Section Name&quot;,
-    footer: createMenu({
-        home: &quot;index.html&quot;
-    }),
-    css: {
-        html: {
-            &quot;font-family&quot;: &quot;helvetica&quot;,
-        }
-    }
-})
-
-page.generate()
-</code></pre></article>
-    </section>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>element</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">html</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

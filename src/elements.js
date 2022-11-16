@@ -56,7 +56,7 @@ const body = (content, attr) => tag("body", content, attr)
 \*
  */
 const div = (content, attr) => {
-	if (Array.isArray(content)) content = content.join("<br>")
+	if (Array.isArray(content)) content = content.join("")
 	return tag("div", content, attr)
 }
 
@@ -176,15 +176,19 @@ const hr = (attr = {}) => tag("hr", null, attr)
  * @param {object} attr - atrribute properties
  * @returns {string}
  */
-const br = (attr = {}) => tag("br", null, attr)
+const br = (num) => {
+    let str = tag("br")
+    if (num) return str.repeat(num)
+    else return str
+}
 
 /** button
  * @param {string} content - html content
  * @param {object} attr - atrribute properties
  * @returns {string}
  */
-const button = (content, href, attr) => {
-	return tag("a", tag("button", content), {href})
+const button = (content, attr) => {
+	return tag("button", content, attr)
 }
 
 const form = (elements, attr) => {
@@ -197,10 +201,11 @@ const script = (content, attr) => tag("script", content, attr)
 const img = (attr) => tag("img", null, attr)
 const i = (content, attr) => tag("i", content, attr)
 const b = (content, attr) => tag("b", content, attr)
+const code = (content, attr) => tag("code", content, attr)
 
 
 
-module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button, input, form, script, img, label, i, b}
+module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button, input, form, script, img, label, i, b, code}
 
 
 

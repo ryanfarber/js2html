@@ -49,16 +49,16 @@ function Page(config = {}) {
 		let head = createHead({
 			title: this.title,
 			style: {
-				".container": {
-					"max-width": "800px",
-					"margin": "auto",
-					"background": "white",
-					"padding": "10px",
-				},
+				// ".container": {
+				// 	"max-width": "800px",
+				// 	"margin": "auto",
+				// 	"background": "white",
+				// 	"padding": "10px",
+				// },
 				...this.css
 			},
 			meta: [
-				{name: "viewport", content: "width=device-width, initial-scale=1"},
+				{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"},
 				...this.meta
 			], 
 			link: [
@@ -71,25 +71,27 @@ function Page(config = {}) {
 
 		// create header
 		if (Array.isArray(this.header)) this.header = this.header.join("")
-		let header = div(h1(this.header) + hr(), {id: "header", class: "header"})
+		let header = div(h1(this.header) + hr(), {id: "header", class: "_header"})
 
 		// create section
 		if (Array.isArray(this.section)) this.section = this.section.join("")
-		let section = div(h2(this.section), {id: "section", class: "section"})
+		let section = div(h2(this.section), {id: "section", class: "_section"})
 
 		// create content
 		if (Array.isArray(this.content)) this.content = this.content.join("")
-		let content = div(this.content, {id: "content", class: "content"})
+		let content = div(this.content, {id: "content", class: "_content"})
 
 		// create footer
 		if (Array.isArray(this.footer)) this.footer = this.footer.join("")
-		let footer = div(this.footer, {id: "footer", class: "footer", style: "position: fixed; bottom: 20px; text-align: center;"})
+		let footer = div(this.footer, {id: "_footer", class: "_footer", 
+			// style: "position: fixed; bottom: 20px; text-align: center;"
+		})
 		// create scripts
 		let scripts = this.scripts.join("")
-		let container = div([header + section, content, footer], {class: "container"})
+		let container = div([header + section, content], {class: "_container"})
 		let doc = createDocument({
 			head,
-			body: container + scripts
+			body: container + footer +scripts
 		})
 		logger.debug("done!")
 		return doc

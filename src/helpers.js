@@ -15,7 +15,9 @@ function tag(type, data, attr = {}) {
 	// let type = config.type
 	if (typeof attr !== "object") throw new ERROR("INVALID_ATTR")
 	if (!type) throw new ERROR("MISSING_TAG_TYPE")
+	if (Array.isArray(data)) data = data.join("")
 	data = data || ""
+	// if (!data || !attr) return ""
 
 	if (type == "hr") return "<hr>"
 	else if (type == "br") return "<br>"

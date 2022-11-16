@@ -12,7 +12,16 @@
             "name": "js2html",
             "title": "js2html",
             "hideGenerator": true,
-            "navLinks": []
+            "navLinks": [
+                {
+                    "label": "Mozilla HTML Docs",
+                    "href": "https://developer.mozilla.org/en-US/docs/Web/HTML"
+                },
+                {
+                    "label": "W3 Schools HTML",
+                    "href": "https://www.w3schools.com/html/default.asp"
+                }
+            ]
         }
 
     },

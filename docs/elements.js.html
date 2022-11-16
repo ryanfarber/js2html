@@ -58,6 +58,22 @@
                     Documentation
                 </a>
                 
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+                        >
+                            Mozilla HTML Docs
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://www.w3schools.com/html/default.asp"
+                        >
+                            W3 Schools HTML
+                        </a>
+                    
                 
                 
             </div>
@@ -76,7 +92,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-elements.html">elements</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-page.html">page</a></li></ul><h3>Classes</h3><ul><li><a href="module-page-Page.html">Page</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-elements.html">elements</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-page.html">page</a></li></ul><h3>Classes</h3><ul><li><a href="Doc.html">Doc</a></li><li><a href="Form.html">Form</a></li><li><a href="module-page-Page.html">Page</a></li><li><a href="Select.html">Select</a></li><li><a href="Table.html">Table</a></li><li><a href="Ul.html">Ul</a></li></ul><h3>Global</h3><ul><li><a href="global.html#a">a</a></li><li><a href="global.html#b">b</a></li><li><a href="global.html#body">body</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#code">code</a></li><li><a href="global.html#details">details</a></li><li><a href="global.html#div">div</a></li><li><a href="global.html#h1">h1</a></li><li><a href="global.html#h2">h2</a></li><li><a href="global.html#h3">h3</a></li><li><a href="global.html#h4">h4</a></li><li><a href="global.html#h5">h5</a></li><li><a href="global.html#h6">h6</a></li><li><a href="global.html#hr">hr</a></li><li><a href="global.html#i">i</a></li><li><a href="global.html#input">input</a></li><li><a href="global.html#p">p</a></li><li><a href="global.html#script">script</a></li><li><a href="global.html#select">select</a></li><li><a href="global.html#span">span</a></li><li><a href="global.html#ul">ul</a></li></ul></div>
                 
             </nav>
         </div>
@@ -151,7 +167,7 @@ const body = (content, attr) => tag("body", content, attr)
 \*
  */
 const div = (content, attr) => {
-	if (Array.isArray(content)) content = content.join("")
+	if (Array.isArray(content)) content = content.join("&lt;br>")
 	return tag("div", content, attr)
 }
 
@@ -166,6 +182,11 @@ const div = (content, attr) => {
 const p = (content, attr) => {
 	content = format(content)
 	return tag("p", content, attr)
+}
+
+const input = (attr) => {
+    // content = format(content)
+    return tag("input", null, attr)
 }
 
 /** li
@@ -266,7 +287,11 @@ const hr = (attr = {}) => tag("hr", null, attr)
  * @param {object} attr - atrribute properties
  * @returns {string}
  */
-const br = (attr = {}) => tag("br", null, attr)
+const br = (num) => {
+    let str = tag("br")
+    if (num) return str.repeat(num)
+    else return str
+}
 
 /** button
  * @param {string} content - html content
@@ -274,12 +299,24 @@ const br = (attr = {}) => tag("br", null, attr)
  * @returns {string}
  */
 const button = (content, href, attr) => {
-	return tag("a", tag("button", content), {href})
+	return tag("a", tag("button", content, attr), {href})
 }
 
+const form = (elements, attr) => {
+    elements = elements.join("")
+    return tag("form", elements, attr)
+}
+
+const label = (content, attr) => tag("label", content, attr)
+const script = (content, attr) => tag("script", content, attr)
+const img = (attr) => tag("img", null, attr)
+const i = (content, attr) => tag("i", content, attr)
+const b = (content, attr) => tag("b", content, attr)
+const code = (content, attr) => tag("code", content, attr)
 
 
-module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button}
+
+module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button, input, form, script, img, label, i, b, code}
 
 
 

@@ -2,10 +2,13 @@
 
 let elements = require("./elements.js")
 let helpers = require("./helpers.js")
+let create = require("./create")
 
 module.exports = {
 	Page: require("./page.js"),
-	Table: require("./table.js"),
+	...create,
+	...helpers,
 	...elements,
-	...helpers
+	
 }
+
