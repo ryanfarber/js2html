@@ -2,6 +2,7 @@
 
 
 const {tag} = require("../helpers.js")
+const {meta} = require("../elements")
 
 
 
@@ -11,11 +12,13 @@ const {tag} = require("../helpers.js")
  * @constructor
  */
 function Doc(config = {}) {
-	this.title = config.title
-	this.useJquery = config.useJquery || true
-	this.head = config.head
-	this.scripts = config.scripts
-	this.body = config.body
+
+	this.jquery = config.jquery || true
+	this.axios = config.axios || true
+	this.fontAwesome = config.fontAwesome || true
+
+
+
 
 
 	this.generate = function() {

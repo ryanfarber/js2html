@@ -7,4 +7,4 @@
  */
 
 const {tag} = require("../helpers.js")
-module.exports = (content, attr) => tag("tag", content, attr)
+module.exports = (content, attr) => tag("script", content, attr)

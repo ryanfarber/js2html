@@ -2,7 +2,7 @@
  * @name br
  * @function
  * @param {number} num - number of line breaks
- * @returns {string}
+ * @returns {html}
  */
  
 const {tag} = require("../helpers.js")

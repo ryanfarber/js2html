@@ -3,7 +3,7 @@
  * @function
  * @param {string} summary
  * @param {object} attr - attributes
- * @returns {string}
+ * @returns {html}
  * @example
  * details("expand to reveal the hint", "here is the hint")
  */

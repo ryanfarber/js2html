@@ -19,6 +19,8 @@
   ],
   "dependencies": {
     "@ryanforever/logger": "^5.0.2",
+    "html-tags": "^3.2.0",
+    "kind-of": "^6.0.3",
     "open": "^8.4.0"
   },
   "devDependencies": {

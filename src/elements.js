@@ -57,6 +57,7 @@ const body = (content, attr) => tag("body", content, attr)
  */
 const div = (content, attr) => {
 	if (Array.isArray(content)) content = content.join("")
+    // content = format(content)
 	return tag("div", content, attr)
 }
 
@@ -69,6 +70,7 @@ const div = (content, attr) => {
  * // <p>hello world</p>
  */
 const p = (content, attr) => {
+    if (Array.isArray(content)) content = content.join("")
 	content = format(content)
 	return tag("p", content, attr)
 }
@@ -202,10 +204,13 @@ const img = (attr) => tag("img", null, attr)
 const i = (content, attr) => tag("i", content, attr)
 const b = (content, attr) => tag("b", content, attr)
 const code = (content, attr) => tag("code", content, attr)
+const nav = (content, attr) => tag("nav", content, attr)
+const raw = (html) => html
+const textarea = (content, attr) => tag("textarea", content, attr)
 
 
 
-module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button, input, form, script, img, label, i, b, code}
+module.exports = {tag, p, a, li, ul, href, link, h1, h2, h3, h4, div, style, html, hr, br, span, button, input, form, script, img, label, i, b, code, nav, raw, textarea}
 
 
 

@@ -3,7 +3,7 @@
  * @function
  * @param {string|array} content
  * @param {object} attr - attributes
- * @returns {string}
+ * @returns {html}
  */
  
 const {tag} = require("../helpers.js")
